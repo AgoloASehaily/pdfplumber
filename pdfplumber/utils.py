@@ -269,7 +269,7 @@ class WordExtractor:
         upright = ordered_chars[0]["upright"]
 
         direction = 1 if (self.horizontal_ltr if upright else self.vertical_ttb) else -1
-
+        ordered_chars = self.filter_chars(ordered_chars)
         word = {
             "text": "".join(map(itemgetter("text"), ordered_chars)),
             "x0": x0,
@@ -285,6 +285,15 @@ class WordExtractor:
             word[key] = ordered_chars[0][key]
 
         return word
+
+    def filter_chars(self, chars):
+        filtered = []
+        for i, c in enumerate(chars[:-1]):
+            nextchar = chars[i + 1]
+            if not (c['text'] == nextchar['text'] and abs(c['x0'] - nextchar['x0']) <= 1):
+                filtered.append(c)
+        filtered.append(chars[-1])
+        return filtered
 
     def char_begins_new_word(
         self,
