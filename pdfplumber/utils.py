@@ -290,7 +290,7 @@ class WordExtractor:
         filtered = []
         for i, c in enumerate(chars[:-1]):
             nextchar = chars[i + 1]
-            if not (c['text'] == nextchar['text'] and abs(c['x0'] - nextchar['x0']) <= 1):
+            if not (c['text'] == nextchar['text'] and abs(c['x0'] - nextchar['x0']) <= 1.5):
                 filtered.append(c)
         filtered.append(chars[-1])
         return filtered
